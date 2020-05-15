@@ -1,4 +1,4 @@
-@extends('admin.layout.master')
+@extends('teacher.layout.master')
 @section('content')
 
 <div class="row">
@@ -41,20 +41,17 @@
                                       {{ Form::text('c_link', null, ['class' => 'form-control']) }}
                                       </div>
 
-                                      <div class="form-group">
-                                        <input type="file" name="c_image" class="form-control-file text-primary" id="course-pic">
-                                    </div>
-
+                                      
                                     <div class="form-group">
                                       {{ Form::label('schedule', 'Select Schedule', ['class' => 'control-label mb-1']) }}
-                                      {{ Form::select('schedule[]', $schedule, null, ['class' => 'form-control myselect', 'data-placeholder' => 'Select Schedules', 'multiple']) }}
+                                      {{ Form::select('schedule[]', $schedule, $selectedPermission, ['class' => 'form-control myselect', 'data-placeholder' => 'Select Schedules', 'multiple']) }}
                                     </div>
 
 
                                       <div>
                                           <button id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
                                               <i class="fa fa-lock fa-lg"></i>&nbsp;
-                                              <span id="payment-button-amount">Create</span>
+                                              <span id="payment-button-amount">Update</span>
                                               <span id="payment-button-sending" style="display:none;">Sending…</span>
                                           </button>
                                       </div>

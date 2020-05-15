@@ -32,6 +32,6 @@ Route::group(['prefix'=>'dashboard', 'middleware'=>'auth'], function(){
     Route::get('/course/create', 'Course\CourseController@create');
     Route::post('/course/store', 'Course\CourseController@store');
     Route::get('/course/edit/{id}', ['uses'=>'Course\CourseController@edit', 'as'=>'course-edit']);
-    Route::put('/course/edit/{id}', ['uses'=>'Course\CourseController@update', 'as'=>'course-update']);
+    Route::put('/course/update/{id}', ['uses'=>'Course\CourseController@update', 'as'=>'course-update']);
     Route::delete('/course/delete/{id}', ['uses'=>'Course\CourseController@destroy', 'as'=>'course-delete']);
 });

@@ -47,7 +47,7 @@
 
                                     <div class="form-group">
                                       {{ Form::label('schedule', 'Select Schedule', ['class' => 'control-label mb-1']) }}
-                                      {{ Form::select('schedule[]', $schedule, null, ['class' => 'form-control myselect', 'data-placeholder' => 'Select Schedules', 'multiple']) }}
+                                      {{ Form::select('schedule[]', $schedule, $selectedPermission, ['class' => 'form-control myselect', 'data-placeholder' => 'Select Schedules', 'multiple']) }}
                                     </div>
 
 

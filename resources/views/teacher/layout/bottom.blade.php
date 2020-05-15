@@ -38,7 +38,7 @@
                 no_results_text: "Oops...nothing found!",
                 width: "100%"
             });
-
+            
         } )( jQuery );
 
        

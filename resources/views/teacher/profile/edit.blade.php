@@ -24,7 +24,7 @@
                                     @endif
 
                                   <hr>
-                                  {{ Form::model($course, ['route' => ['course-update', $course->id], 'method'=>'put']) }}
+                                  {{ Form::model($user, ['route' => ['course-update', $user->id], 'method'=>'put']) }}
 
                                   {{ Form::open(['url' => 'dashboard/course/store', 'method'=>'post', 'enctype'=>'multipart/form-data']) }}
                                       
@@ -49,7 +49,7 @@
 
                                     <div class="form-group">
                                       {{ Form::label('schedule', 'Select Schedule', ['class' => 'control-label mb-1']) }}
-                                      {{ Form::select('schedule[]', $schedule, null, ['class' => 'form-control myselect', 'data-placeholder' => 'Select Schedules', 'multiple']) }}
+                                      {{ Form::select('schedule[]', $schedule ?? '', null, ['class' => 'form-control myselect', 'data-placeholder' => 'Select Schedules', 'multiple']) }}
                                     </div>
 
 
