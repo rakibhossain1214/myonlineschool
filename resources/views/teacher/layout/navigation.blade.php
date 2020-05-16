@@ -24,7 +24,7 @@
                         <a href="{{ url('/dashboard/course/') }}"> <i class="menu-icon fa fa-laptop"></i>Instructing Courses</a>
                     </li>
                     <li>
-                        <a href="{{ url('/back/permission/') }}"> <i class="menu-icon fa fa-envelope"></i>Messages</a>
+                        <a href="{{ url('/dashboard/message/') }}"> <i class="menu-icon fa fa-envelope"></i>Messages</a>
                     </li>
                    
                 </ul>

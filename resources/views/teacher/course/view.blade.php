@@ -1,4 +1,4 @@
-@extends('teacher.layout.master')
+@extends('teacher.layout.coursemaster')
 @section('content')
 
 <link rel="stylesheet" href="{{ asset('teacher/assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
@@ -39,39 +39,23 @@
                     @endif
                         <div class="card-header">
                             <strong class="card-title">{{ $page_name }}</strong>
-                            <a href="{{ url('dashboard/course/create') }}" class="btn btn-primary pull-right" >Create</a>
+                            <a href="{{ url('dashboard/course/create') }}" class="btn m-1 btn-primary pull-right" >Create</a>
+                            <a href="{{ url('dashboard/course/edit/'.$course->id) }}" class="btn m-1 btn-primary pull-right" >Edit</a>
                         </div>
                         <div class="card-body">
-                  <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Course Cover</th>
-                        <th>Course Name</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                      @foreach($course as $i=>$row)
-                        <td>{{ ++$i }}</td>
-                        <td>
-                            <img class="mt-2 rounded-circle" style="width:100px;height:100px;" src="{{asset('uploads/courses').'/'.$row->c_image}}" alt="Logo">
-                        </td>
-                        <td>{{ $row->c_name }}</td>
 
-                        <td>
-                        <a href="{{ url('dashboard/course/view/'.$row->id) }}" class="btn btn-success">Go to Course</a>
-                          <a href="{{ url('dashboard/course/edit/'.$row->id) }}" class="btn btn-primary">Edit</a>
-                          {{ Form::open(['method'=>'DELETE', 'url'=>['/dashboard/course/delete/'.$row->id], 'style'=>'display:inline'])}}
-                          {{ Form::submit('Delete', ['class' =>'btn btn-danger']) }}
-                          {{ Form::close() }}
-                        </td>
-                        
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
+                        <div class="alert alert-success" role="alert">
+                            <h4 class="alert-heading">{{ $course->c_name}}</h4>
+                            <p class="alert-heading"> <strong> Time-slots: </strong> 
+                                @foreach($schedule as $val)
+                                {{ $val }}
+                                @endforeach
+                            </p>
+                            <p>{{ $course->c_curriculum }}</p>
+                            <hr>
+                            <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+                        </div>
+
                         </div>
                     </div>
                 </div>

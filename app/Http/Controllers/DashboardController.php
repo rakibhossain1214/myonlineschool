@@ -9,12 +9,17 @@ use Auth;
 use Image;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use App\Mynotification;
+use DB;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        return view('teacher.profile.profile', array('user' => Auth::user()));
+        $notification = DB::table('mynotifications')
+                        ->where('n_status', 0)->count();
+
+        return view('teacher.profile.profile', array('user' => Auth::user(), 'n' => $notification));
     }
 
     public function updateAvatar(Request $request)
@@ -28,7 +33,10 @@ class DashboardController extends Controller
             $user->avatar = $filename;
             $user->save();
 
-            return view('teacher.profile.profile', array('user' => Auth::user()));
+            $notification = DB::table('mynotifications')
+                        ->where('n_status', 0)->count();
+            $n = $notification;
+            return view('teacher.profile.profile', compact('user', 'n'));
         }
     }
 
@@ -38,7 +46,12 @@ class DashboardController extends Controller
         $page_name = 'Profile Edit';
         $user = User::find($id);
         
-        return view('teacher.profile.edit', compact('page_name', 'user'));
+        $notification = DB::table('mynotifications')
+                    ->where('n_status', 0)->count();
+        
+        $n = $notification;
+
+        return view('teacher.profile.edit', compact('page_name', 'user', 'n'));
     }
 
    

@@ -12,17 +12,23 @@ use App\Course;
 use App\Schedule;
 use App\CourseSchedule;
 Use DB;
+use App\Mynotification;
+
 class CourseController extends Controller
 {
     
     public function index()
     {
-        $page_name = "Create a new course";
+        $page_name = "My instructing courses";
         $user = Auth::user();
 
         $course = Course::where('c_teacher_id', Auth::user()->id)->get();
         
-        return view('teacher.course.list', compact('user','page_name', 'course'));
+        $notificationCount = DB::table('mynotifications')
+                            ->where('n_status', 0)->count();
+        $n = $notificationCount;
+
+        return view('teacher.course.list', compact('user','page_name', 'course', 'n'));
     }
 
     public function create()
@@ -36,9 +42,13 @@ class CourseController extends Controller
         $selectedPermission = DB::table('course_schedules')
                                 ->where('course_schedules.course_user_id', Auth::user()->id)
                                 ->pluck('schedule_id')->toArray();
-
         
-        return view('teacher.course.create', compact('user','page_name', 'selectedPermission','schedule'));
+
+        $notificationCount = DB::table('mynotifications')
+                                ->where('n_status', 0)->count();
+        $n = $notificationCount;
+
+        return view('teacher.course.create', compact('user','page_name', 'selectedPermission','schedule', 'n'));
 
     }
 
@@ -80,6 +90,12 @@ class CourseController extends Controller
             $course_schedules->save();
         }
 
+        $notification = new Mynotification();
+        $notification->notification = "You have created a new course!";
+        $notification->n_user_id = Auth::user()->id;
+        $notification->n_status = 0;
+        $notification->save();
+
         return redirect()->action('Course\CourseController@index')->with('success',"Course Created Successfully!");
 
     
@@ -104,7 +120,11 @@ class CourseController extends Controller
                                 ->where('course_schedules.course_user_id', Auth::user()->id)
                                 ->pluck('schedule_id')->toArray();
         
-        return view('teacher.course.edit', compact('page_name', 'user','course', 'schedule', 'selectedPermission'));
+        $notificationCount = DB::table('mynotifications')
+                                ->where('n_status', 0)->count();
+        $n = $notificationCount;
+
+        return view('teacher.course.edit', compact('n','page_name', 'user','course', 'schedule', 'selectedPermission'));
     }
 
     
@@ -141,6 +161,12 @@ class CourseController extends Controller
             $course_schedules->save();
         }
 
+        $notification = new Mynotification();
+        $notification->notification = "You have updated '".$course->c_name."'";
+        $notification->n_user_id = Auth::user()->id;
+        $notification->n_status = 0;
+        $notification->save();
+
         return redirect()->action('Course\CourseController@index')->with('success',"Course Updated Successfully!");
     }
 
@@ -150,4 +176,60 @@ class CourseController extends Controller
         Course::where('id', $id)->delete();
         return redirect()->action('Course\CourseController@index')->with('success',"Course Deleted Successfully!");
     }
+
+//course
+    public function view($id)
+    {
+        
+        
+        $page_name = 'Course Page';
+        $user = Auth::user();
+        $course = Course::find($id);
+        
+        $selectedPermission = DB::table('course_schedules')
+                                ->where('course_schedules.course_user_id', Auth::user()->id)
+                                ->pluck('schedule_id')->toArray();
+
+        $totalschedule = Schedule::all();
+        $i=0;
+        foreach($selectedPermission as $val){
+            foreach($totalschedule as $s){
+                if($val==$s->id){
+                    $schedule[$i] = $s->where('id', $val)->pluck('time');
+                    $i++;
+                }
+            }
+
+        }
+
+        $notificationCount = DB::table('mynotifications')
+                                ->where('n_status', 0)->count();
+        $n = $notificationCount;
+
+        return view('teacher.course.view', compact('n','page_name', 'user','course', 'schedule', 'selectedPermission'));
+    }
+
+    public function updateCoursePhoto(Request $request, $id)
+    {
+        if($request->hasFile('c_image')){
+            $c_image = $request->file('c_image');
+            $filename = time().'.'.$c_image->getClientOriginalExtension();
+            Image::make($c_image)->resize(300,300)->save( public_path('uploads/courses/'.$filename));
+        
+            $course = Course::find($id);
+            $course->c_image = $filename;
+            $course->save();
+
+            $notification = DB::table('mynotifications')
+                        ->where('n_status', 0)->count();
+            $n = $notification;
+            
+            $page_name = "Course Image Update";
+
+            $user = Auth::user();
+
+            return view('teacher.course.view', compact('user','page_name', 'course', 'n'));
+        }
+    }
+
 }

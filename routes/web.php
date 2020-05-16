@@ -34,4 +34,17 @@ Route::group(['prefix'=>'dashboard', 'middleware'=>'auth'], function(){
     Route::get('/course/edit/{id}', ['uses'=>'Course\CourseController@edit', 'as'=>'course-edit']);
     Route::put('/course/update/{id}', ['uses'=>'Course\CourseController@update', 'as'=>'course-update']);
     Route::delete('/course/delete/{id}', ['uses'=>'Course\CourseController@destroy', 'as'=>'course-delete']);
+
+    Route::get('/message', 'Course\MessageController@index');
+    Route::get('/message/sent', 'Course\MessageController@sent');
+    Route::get('/message/create', 'Course\MessageController@create');
+    Route::get('/message/read/{id}', 'Course\MessageController@read');
+    Route::post('/message/store', 'Course\MessageController@store');
+    Route::delete('/message/delete/{id}', ['uses'=>'Course\MessageController@destroy', 'as'=>'message-delete']);
+
+    Route::get('/notification', 'MynotificationController@index');
+
+    Route::get('/course/view/{id}', 'Course\CourseController@view');
+    Route::post('/course/view/{id}', ['uses'=>'Course\CourseController@updateCoursePhoto', 'as'=>'course-photo-update']);
+
 });

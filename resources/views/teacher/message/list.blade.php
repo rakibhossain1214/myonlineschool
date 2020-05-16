@@ -1,7 +1,9 @@
 @extends('teacher.layout.master')
 @section('content')
 
-<link rel="stylesheet" href="{{ asset('teacher/assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('teacher/assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
+
+    
 
 <div class="breadcrumbs">
             <div class="col-sm-4">
@@ -38,36 +40,36 @@
                         </div>
                     @endif
                         <div class="card-header">
-                            <strong class="card-title">{{ $page_name }}</strong>
-                            <a href="{{ url('dashboard/course/create') }}" class="btn btn-primary pull-right" >Create</a>
+                        <a href="{{ url('dashboard/message/') }}" class="btn btn-secondary" >Inbox</a>
+                        <a href="{{ url('dashboard/message/sent') }}" class="btn btn-secondary" >Sent Messages</a>
+
+                            <a href="{{ url('dashboard/message/create') }}" class="btn btn-info pull-right" >Send New Message</a>
                         </div>
                         <div class="card-body">
                   <table id="bootstrap-data-table" class="table table-striped table-bordered">
                     <thead>
                       <tr>
-                        <th>#</th>
-                        <th>Course Cover</th>
-                        <th>Course Name</th>
+                        <th>Message Status</th>
+                        <th>Message Title</th>
+                        <th>Sender</th>
+                        <th>Receive time</th>
                         <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
-                      @foreach($course as $i=>$row)
-                        <td>{{ ++$i }}</td>
+                      @foreach($mymessage as $i=>$row)
+                        @if($row->m_status == 0)
+                        <td>❎not seen</td>
+                        @else
+                        <td>✅seen</td>
+                        @endif
+                        <td>{{ $row->m_title }}</td>
+                        <td>{{ $row->m_sender_name }}</td>
+                        <td>{{ $row->created_at }}</td>
                         <td>
-                            <img class="mt-2 rounded-circle" style="width:100px;height:100px;" src="{{asset('uploads/courses').'/'.$row->c_image}}" alt="Logo">
+                        <a href="{{ url('dashboard/message/read/'.$row->id) }}" class="text-primary">View Message</a>
                         </td>
-                        <td>{{ $row->c_name }}</td>
-
-                        <td>
-                        <a href="{{ url('dashboard/course/view/'.$row->id) }}" class="btn btn-success">Go to Course</a>
-                          <a href="{{ url('dashboard/course/edit/'.$row->id) }}" class="btn btn-primary">Edit</a>
-                          {{ Form::open(['method'=>'DELETE', 'url'=>['/dashboard/course/delete/'.$row->id], 'style'=>'display:inline'])}}
-                          {{ Form::submit('Delete', ['class' =>'btn btn-danger']) }}
-                          {{ Form::close() }}
-                        </td>
-                        
                       </tr>
                       @endforeach
                     </tbody>

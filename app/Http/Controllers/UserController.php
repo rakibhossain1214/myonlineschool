@@ -29,7 +29,10 @@ class UserController extends Controller
     public function create()
     {
         //
-        return view('teacher.layout.master', array('user' => Auth::user()));
+        $notificationCount = DB::table('mynotifications')
+                            ->where('n_status', 0)->count();
+        
+        return view('teacher.layout.master', array('user' => Auth::user(), 'n'=>$notificationCount));
     }
 
     /**

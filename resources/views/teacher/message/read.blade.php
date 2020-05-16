@@ -1,7 +1,9 @@
 @extends('teacher.layout.master')
 @section('content')
 
-<link rel="stylesheet" href="{{ asset('teacher/assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('teacher/assets/css/lib/datatable/dataTables.bootstrap.min.css') }}">
+
+    
 
 <div class="breadcrumbs">
             <div class="col-sm-4">
@@ -39,39 +41,14 @@
                     @endif
                         <div class="card-header">
                             <strong class="card-title">{{ $page_name }}</strong>
-                            <a href="{{ url('dashboard/course/create') }}" class="btn btn-primary pull-right" >Create</a>
+                            <a href="{{ url('dashboard/message/') }}" class="btn btn-primary pull-right" >Back</a>
                         </div>
                         <div class="card-body">
-                  <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Course Cover</th>
-                        <th>Course Name</th>
-                        <th>Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                      @foreach($course as $i=>$row)
-                        <td>{{ ++$i }}</td>
-                        <td>
-                            <img class="mt-2 rounded-circle" style="width:100px;height:100px;" src="{{asset('uploads/courses').'/'.$row->c_image}}" alt="Logo">
-                        </td>
-                        <td>{{ $row->c_name }}</td>
-
-                        <td>
-                        <a href="{{ url('dashboard/course/view/'.$row->id) }}" class="btn btn-success">Go to Course</a>
-                          <a href="{{ url('dashboard/course/edit/'.$row->id) }}" class="btn btn-primary">Edit</a>
-                          {{ Form::open(['method'=>'DELETE', 'url'=>['/dashboard/course/delete/'.$row->id], 'style'=>'display:inline'])}}
-                          {{ Form::submit('Delete', ['class' =>'btn btn-danger']) }}
-                          {{ Form::close() }}
-                        </td>
-                        
-                      </tr>
-                      @endforeach
-                    </tbody>
-                  </table>
+                            <h3>{{ $mymessage->m_title }}</h3>
+                            <p>sent from: {{  $mymessage->m_sender_name }} @ {{ $mymessage->created_at }}</p>
+                            <p></p>
+                            <h4>{{ $mymessage->m_text }}</h4>
+                            <h4></h4>
                         </div>
                     </div>
                 </div>

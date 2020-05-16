@@ -26,7 +26,7 @@
             </a>
 
             <div class="user-menu dropdown-menu">
-                    <a class="nav-link" href="#"><i class="menu-item fa fa-bell"></i>Notifications <span class="count">13</span></a>
+                    <a class="nav-link" href="{{  url('dashboard/notification') }}"><i class="menu-item fa fa-bell"></i>Notifications <span class="count">{{ $n }}</span></a>
                     <a class="nav-link" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
