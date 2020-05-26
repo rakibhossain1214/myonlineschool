@@ -26,7 +26,9 @@
                     <li>
                         <a href="{{ url('/dashboard/message/') }}"> <i class="menu-icon fa fa-envelope"></i>Messages</a>
                     </li>
-                   
+                    <li>
+                        <a href="{{ url('/dashboard/profile/mylocation/') }}"> <i class="menu-icon fa fa-envelope"></i>My Location</a>
+                    </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>

@@ -13,6 +13,7 @@ use App\Schedule;
 use App\CourseSchedule;
 Use DB;
 use App\Mynotification;
+use App\CourseStudent;
 
 class CourseController extends Controller
 {
@@ -180,8 +181,6 @@ class CourseController extends Controller
 //course
     public function view($id)
     {
-        
-        
         $page_name = 'Course Page';
         $user = Auth::user();
         $course = Course::find($id);
@@ -231,5 +230,33 @@ class CourseController extends Controller
             return view('teacher.course.view', compact('user','page_name', 'course', 'n'));
         }
     }
+
+    public function video($id){
+
+        $course = Course::find($id);
+        $notification = DB::table('mynotifications')
+                            ->where('n_status', 0)->count();
+        $n = $notification;
+        $page_name = "Course Image Update";
+        $user = Auth::user();
+
+        return view('teacher.course.video', compact('user','page_name', 'course', 'n'));
+    }
+
+    public function courseStudent($id){
+        $course = Course::find($id);
+        $notification = DB::table('mynotifications')
+                            ->where('n_status', 0)->count();
+        $n = $notification;
+        $page_name = "Course Image Update";
+        $user = Auth::user();
+
+        $students = DB::table('course_students')
+                        ->where('c_id', $id)->get();
+
+        return view('teacher.students.list', compact('user','page_name', 'course', 'n', 'students'));
+    }
+
+    
 
 }

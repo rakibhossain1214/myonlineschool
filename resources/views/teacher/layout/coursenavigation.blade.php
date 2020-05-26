@@ -21,15 +21,18 @@
                         <a href="{{ url('/dashboard/course/view/'.$course->id) }}"> <i class="menu-icon fa fa-dashboard"></i>Course Overview</a>
                     </li>
                     <li>
-                        <a href="{{ url('/dashboard/course/students/'.$course->id) }}"> <i class="menu-icon fa fa-laptop"></i>Course Students</a>
+                        <a href="{{ url('/dashboard/course/view/'.$course->id.'/student') }}"> <i class="menu-icon fa fa-laptop"></i>Course Students</a>
                     </li>
                     <li>
-                        <a href="{{ url('/dashboard/course/notes/'.$course->id) }}"> <i class="menu-icon fa fa-envelope"></i>Course Notes</a>
+                        <a href="{{ url('/dashboard/course/view/'.$course->id.'/note') }}"> <i class="menu-icon fa fa-envelope"></i>Course Notes</a>
                     </li>
                     <li>
-                        <a href="{{ url('/dashboard/course/notices/'.$course->id) }}"> <i class="menu-icon fa fa-envelope"></i>Course Notices</a>
+                        <a href="{{ url('/dashboard/course/view/'.$course->id.'/notice') }}"> <i class="menu-icon fa fa-envelope"></i>Course Notices</a>
                     </li>
-                   
+                    <li>
+                        <a href="{{ url('/dashboard/course/view/'.$course->id.'/video') }}"> <i class="menu-icon fa fa-envelope"></i>Live Class</a>
+                    </li>
+
                 </ul>
             </div><!-- /.navbar-collapse -->
         </nav>

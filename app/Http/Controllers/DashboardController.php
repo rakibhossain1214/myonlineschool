@@ -40,6 +40,14 @@ class DashboardController extends Controller
         }
     }
 
+    public function location(){
+            
+            $notification = DB::table('mynotifications')
+            ->where('n_status', 0)->count();
+
+            return view('teacher.profile.mylocation', array('user' => Auth::user(), 'n' => $notification));
+    }
+
 
     public function edit($id)
     {
