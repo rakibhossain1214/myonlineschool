@@ -25,7 +25,27 @@ class MessageController extends Controller
         $notificationCount = DB::table('mynotifications')
                             ->where('n_status', 0)->count();
         $n = $notificationCount;
-        return view('teacher.message.list', compact('user','page_name', 'mymessage', 'n'));
+
+
+        return view('user.message.list', compact('user','page_name', 'mymessage', 'n'));
+    }
+
+    public function api()
+    {
+       
+        $user = Auth::user();
+
+        $mymessage = Message::where('m_receiver_id', Auth::user()->id)->get();
+        
+        $notificationCount = DB::table('mynotifications')
+                            ->where('n_status', 0)->count();
+        $n = $notificationCount;
+
+        $details = array("messages"=>"", "token"=>"");
+        $details["messages"] = $mymessage;
+        $details["token"] = Auth::user()->createToken(config('vms.myToken'))->accessToken;
+
+        return $details;
     }
 
     public function sent()
@@ -39,7 +59,7 @@ class MessageController extends Controller
                             ->where('n_status', 0)->count();
         $n = $notificationCount;
 
-        return view('teacher.message.sent', compact('user','page_name', 'mymessage', 'n'));
+        return view('user.message.sent', compact('user','page_name', 'mymessage', 'n'));
     }
 
     public function read($id)
@@ -55,7 +75,7 @@ class MessageController extends Controller
                             ->where('n_status', 0)->count();
         $n = $notificationCount;
 
-        return view('teacher.message.read', compact('user','page_name', 'mymessage', 'n'));
+        return view('user.message.read', compact('user','page_name', 'mymessage', 'n'));
     }
 
    
@@ -70,7 +90,7 @@ class MessageController extends Controller
         ->where('n_status', 0)->count();
 $n = $notificationCount;
 
-        return view('teacher.message.create', compact('user','page_name','users', 'n'));
+        return view('user.message.create', compact('user','page_name','users', 'n'));
     }
 
     

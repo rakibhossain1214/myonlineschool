@@ -19,7 +19,7 @@ class DashboardController extends Controller
         $notification = DB::table('mynotifications')
                         ->where('n_status', 0)->count();
 
-        return view('teacher.profile.profile', array('user' => Auth::user(), 'n' => $notification));
+        return view('user.profile.profile', array('user' => Auth::user(), 'n' => $notification));
     }
 
     public function updateAvatar(Request $request)
@@ -36,7 +36,7 @@ class DashboardController extends Controller
             $notification = DB::table('mynotifications')
                         ->where('n_status', 0)->count();
             $n = $notification;
-            return view('teacher.profile.profile', compact('user', 'n'));
+            return view('user.profile.profile', compact('user', 'n'));
         }
     }
 
@@ -45,7 +45,7 @@ class DashboardController extends Controller
             $notification = DB::table('mynotifications')
             ->where('n_status', 0)->count();
 
-            return view('teacher.profile.mylocation', array('user' => Auth::user(), 'n' => $notification));
+            return view('user.profile.mylocation', array('user' => Auth::user(), 'n' => $notification));
     }
 
 
@@ -59,7 +59,7 @@ class DashboardController extends Controller
         
         $n = $notification;
 
-        return view('teacher.profile.edit', compact('page_name', 'user', 'n'));
+        return view('user.profile.edit', compact('page_name', 'user', 'n'));
     }
 
    

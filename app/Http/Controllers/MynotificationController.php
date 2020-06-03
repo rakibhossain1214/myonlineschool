@@ -15,6 +15,7 @@ class MynotificationController extends Controller
     public function index()
     {
         $notification = DB::table('mynotifications')
+                            ->where('n_user_id', Auth::user()->id)
                             ->orderBy('id','DESC')->get();
         $user =  Auth::user();
 
@@ -28,7 +29,7 @@ class MynotificationController extends Controller
                         ->where('n_status', 0)->count();
             $n = $notificationCount;
 
-        return view('teacher.notification.list', compact('notification', 'user', 'n'));
+        return view('user.notification.list', compact('notification', 'user', 'n'));
     }
 
    

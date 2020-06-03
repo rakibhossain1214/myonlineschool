@@ -34,7 +34,15 @@ class NoteController extends Controller
                                 ->where('n_status', 0)->count();
         $n = $notificationCount;
 
-        return view('teacher.notes.list', compact('n','page_name', 'user', 'course', 'note'));
+        $status = 0;
+
+        $statusChecker =  DB::select('select * from course_students where c_id=? and s_id=?', [$id, Auth::user()->id]);;
+        if($statusChecker != null)
+        {
+            $status = 1;
+        }
+
+        return view('user.notes.list', compact('status','n','page_name', 'user', 'course', 'note'));
     }
 
     /**
@@ -52,7 +60,15 @@ class NoteController extends Controller
         ->where('n_status', 0)->count();
         $n = $notificationCount;
 
-        return view('teacher.notes.create', compact('user','page_name', 'n', 'course'));
+        $status = 0;
+
+        $statusChecker =  DB::select('select * from course_students where c_id=? and s_id=?', [$id, Auth::user()->id]);;
+        if($statusChecker != null)
+        {
+            $status = 1;
+        }
+
+        return view('user.notes.create', compact('status','user','page_name', 'n', 'course'));
     }
 
     /**
@@ -94,7 +110,16 @@ class NoteController extends Controller
                                     ->where('n_status', 0)->count();
             $n = $notificationCount;
 
-            return view('teacher.notes.list', compact('n','page_name', 'user', 'course', 'note'));
+
+            $status = 0;
+
+            $statusChecker =  DB::select('select * from course_students where c_id=? and s_id=?', [$id, Auth::user()->id]);;
+            if($statusChecker != null)
+            {
+                $status = 1;
+            }
+
+            return view('user.notes.list', compact('status','n','page_name', 'user', 'course', 'note'));
             }
     }
 
@@ -146,8 +171,28 @@ class NoteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, $id1)
     {
-        //
+        Note::where('id', $id1)->delete();
+
+        $page_name = 'Note Page';
+        $user = Auth::user();
+        $course = Course::find($id);
+
+        $note = DB::table('notes')->where('note_course_id', $id)->orderBy('id','DESC')->get();
+
+        $notificationCount = DB::table('mynotifications')
+                                ->where('n_status', 0)->count();
+        $n = $notificationCount;
+
+        $status = 0;
+
+        $statusChecker =  DB::select('select * from course_students where c_id=? and s_id=?', [$id, Auth::user()->id]);;
+        if($statusChecker != null)
+        {
+            $status = 1;
+        }
+        
+        return view('user.notes.list',  compact('status','n','page_name', 'user', 'course', 'note'))->with('success',"Note deleted Successfully!");
     }
 }

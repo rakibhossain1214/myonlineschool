@@ -30,7 +30,16 @@ class NoticeController extends Controller
                                 ->where('n_status', 0)->count();
         $n = $notificationCount;
 
-        return view('teacher.notice.list', compact('n','page_name', 'user', 'course', 'notice'));
+
+        $status = 0;
+
+        $statusChecker =  DB::select('select * from course_students where c_id=? and s_id=?', [$id, Auth::user()->id]);;
+        if($statusChecker != null)
+        {
+            $status = 1;
+        }
+
+        return view('user.notice.list', compact('status','n','page_name', 'user', 'course', 'notice'));
     }
 
     
@@ -44,7 +53,15 @@ class NoticeController extends Controller
         ->where('n_status', 0)->count();
         $n = $notificationCount;
 
-        return view('teacher.notice.create', compact('user','page_name', 'n', 'course'));
+        $status = 0;
+
+        $statusChecker =  DB::select('select * from course_students where c_id=? and s_id=?', [$id, Auth::user()->id]);;
+        if($statusChecker != null)
+        {
+            $status = 1;
+        }
+
+        return view('user.notice.create', compact('status','user','page_name', 'n', 'course'));
     }
 
     
@@ -74,8 +91,16 @@ class NoticeController extends Controller
         $notificationCount = DB::table('mynotifications')
                                 ->where('n_status', 0)->count();
         $n = $notificationCount;
+
+        $status = 0;
+
+        $statusChecker =  DB::select('select * from course_students where c_id=? and s_id=?', [$id, Auth::user()->id]);;
+        if($statusChecker != null)
+        {
+            $status = 1;
+        }
         
-        return view('teacher.notice.list',  compact('n','page_name', 'user', 'course', 'notice'))->with('success',"Notice posted Successfully!");
+        return view('user.notice.list',  compact('status','n','page_name', 'user', 'course', 'notice'))->with('success',"Notice posted Successfully!");
     }
 
     
@@ -110,7 +135,15 @@ class NoticeController extends Controller
         $notificationCount = DB::table('mynotifications')
                                 ->where('n_status', 0)->count();
         $n = $notificationCount;
+
+        $status = 0;
+
+        $statusChecker =  DB::select('select * from course_students where c_id=? and s_id=?', [$id, Auth::user()->id]);;
+        if($statusChecker != null)
+        {
+            $status = 1;
+        }
         
-        return view('teacher.notice.list',  compact('n','page_name', 'user', 'course', 'notice'))->with('success',"Notice posted Successfully!");
+        return view('user.notice.list',  compact('status','n','page_name', 'user', 'course', 'notice'))->with('success',"Notice posted Successfully!");
     }
 }

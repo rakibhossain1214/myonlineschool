@@ -36,6 +36,8 @@ Route::group(['prefix'=>'dashboard', 'middleware'=>'auth'], function(){
     Route::get('/course/view/{id}', 'Course\CourseController@view');
     Route::post('/course/view/{id}', ['uses'=>'Course\CourseController@updateCoursePhoto', 'as'=>'course-photo-update']);
     Route::get('/course/view/{id}/video', 'Course\CourseController@video');
+    Route::get('/course/view/{id}/book', 'Course\CourseController@bookCourse');
+    Route::post('/course/view/{id}/book', 'Course\CourseController@bookCourseStore');
 
     Route::get('/course/view/{id}/notice', 'Course\NoticeController@index');
     Route::get('/course/view/{id}/notice/create', 'Course\NoticeController@create');
@@ -47,7 +49,7 @@ Route::group(['prefix'=>'dashboard', 'middleware'=>'auth'], function(){
     Route::get('/course/view/{id}/note/create', 'Course\NoteController@create');
     Route::post('/course/view/{id}/note/store', ['uses'=>'Course\NoteController@store', 'as'=>'course-note-upload']);
     // Route::post('/course/view/{id}/note/store', 'Course\NoteController@store');
-    Route::delete('/course/view/{id}/note/delete/{id1}', ['uses'=>'Course\NoteController@destroy', 'as'=>'notice-delete']);
+    Route::delete('/course/view/{id}/note/delete/{id1}', ['uses'=>'Course\NoteController@destroy', 'as'=>'note-delete']);
 
     
     Route::get('/course/view/{id}/student/', 'Course\CourseController@courseStudent');
@@ -57,4 +59,9 @@ Route::group(['prefix'=>'dashboard', 'middleware'=>'auth'], function(){
     
     Route::delete('/course/view/{id}/student/{id1}/delete', 'Course\CourseController@courseStudentDelete');
     
+    //Student Routes
+    Route::get('/course/student/', 'Course\CourseController@index');
+
+
+    Route::get('api/message', 'Course\MessageController@api');
 });

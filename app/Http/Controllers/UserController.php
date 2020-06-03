@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('teacher/dashboard', array('user' => Auth::user()));
+        return view('user/dashboard', array('user' => Auth::user()));
     }
 
     
@@ -32,7 +32,7 @@ class UserController extends Controller
         $notificationCount = DB::table('mynotifications')
                             ->where('n_status', 0)->count();
         
-        return view('teacher.layout.master', array('user' => Auth::user(), 'n'=>$notificationCount));
+        return view('user.layout.master', array('user' => Auth::user(), 'n'=>$notificationCount));
     }
 
     /**
