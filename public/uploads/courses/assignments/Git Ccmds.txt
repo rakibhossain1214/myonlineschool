@@ -1,0 +1,17 @@
+echo "# test" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/rakibhossain1214/test.git
+git push -u origin master
+
+
+git remote add origin https://github.com/rakibhossain1214/test.git
+git push -u origin master
+
+
+git add --all
+git remote add origin https://github.com/rakibhossain1214/myschool.git
+git push -u origin master
+
+git remote rm origin

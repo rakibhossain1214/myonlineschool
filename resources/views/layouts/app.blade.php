@@ -57,6 +57,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ url('/dashboard') }}">Dashboard</a>
+                                    <a class="dropdown-item" href="{{  url('dashboard/notification') }}">Notifications <span class="count"> {{ $n }}</span></a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -81,5 +82,15 @@
             @yield('content')
         </main>
     </div>
+
+<style>
+.count{
+    background:#d9534f;
+    padding:2px;
+    color:white;
+    border-radius: 100%;
+    }
+</style>
+
 </body>
 </html>

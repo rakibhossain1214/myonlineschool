@@ -1,14 +1,21 @@
 <?php
 
-Route::get('/', function () {
-    return view('home');
-});
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index');
 
+Route::get('/home', 'HomeController@index');
 
+Route::get('/apply', 'HomeController@apply');
+Route::post('/apply-store', 'HomeController@applyStore');
+
+Route::get('/all-courses', 'HomeController@allCourses');
+
+Route::get('/terms', 'HomeController@terms');
+
+Route::get('/privacy', 'HomeController@privacy');
 
 Route::group(['prefix'=>'dashboard', 'middleware'=>'auth'], function(){
     Route::get('/', 'DashboardController@index');
@@ -51,17 +58,61 @@ Route::group(['prefix'=>'dashboard', 'middleware'=>'auth'], function(){
     // Route::post('/course/view/{id}/note/store', 'Course\NoteController@store');
     Route::delete('/course/view/{id}/note/delete/{id1}', ['uses'=>'Course\NoteController@destroy', 'as'=>'note-delete']);
 
-    
-    Route::get('/course/view/{id}/student/', 'Course\CourseController@courseStudent');
+    Route::get('/course/view/{id}/assignment', 'Course\AssignmentController@index');
+    Route::get('/course/view/{id}/assignment/create', 'Course\AssignmentController@create');
+    Route::post('/course/view/{id}/assignment/store', ['uses'=>'Course\AssignmentController@store', 'as'=>'course-assigment-upload']);
+    Route::delete('/course/view/{id}/assignment/delete/{id1}', ['uses'=>'Course\AssignmentController@destroy', 'as'=>'assignment-delete']);
 
-    Route::get('/course/view/{id}/student/{id1}/edit', 'Course\CourseController@courseStudentEdit');
-    Route::put('/course/view/{id}/student/{id1}/edit', ['uses'=>'CourseController@courseStudentUpdate', 'as'=>'student-update']);
+    Route::get('/course/view/{id}/assignment/submit/{id1}', 'Course\AssignmentController@submit');
+    Route::post('/course/view/{id}/assignment/submit/{id1}/store', 'Course\AssignmentController@assignmentStore');
+    Route::get('/course/view/{id}/assignment/assignment-marks', 'Course\AssignmentController@assignmentMarks');
+    Route::get('/course/view/{id}/assignment/submission/{id1}', 'Course\AssignmentController@assignmentSubmissions');
+    Route::get('/course/view/{id}/assignment/submission/edit/{id1}',  'Course\AssignmentController@evaluate');
+    Route::post('/course/view/{id}/assignment/submission/store/{id1}',  'Course\AssignmentController@evaluateStore');
+
+    Route::get('/course/view/{id}/student/', 'Course\CourseController@courseStudent');
     
-    Route::delete('/course/view/{id}/student/{id1}/delete', 'Course\CourseController@courseStudentDelete');
+
+   
+    Route::get('/course/view/{id}/update-result/{id1}',  'Course\CourseController@courseStudentEdit');
+    Route::put('/course/view/{id}/update-result/{id1}/store',  'Course\CourseController@courseStudentStore');
+    Route::put('/course/view/{id}/update-status',  'Course\CourseController@updateStatus');
+
+    Route::delete('/course/view/{id}/delete-student/{id1}', 'Course\CourseController@courseStudentDelete');
     
     //Student Routes
     Route::get('/course/student/', 'Course\CourseController@index');
 
 
     Route::get('api/message', 'Course\MessageController@api');
+
+    //admin
+    Route::get('/course/all-courses', 'Admin\AdminController@index');
+    Route::get('/course/checkouts', 'Admin\AdminController@checkout');
+    Route::post('/course/checkouts/{id}', 'Admin\AdminController@manage');
+    Route::delete('/course/checkouts/{id}/delete', 'Admin\AdminController@delete');
+
+    Route::get('/all-users', 'Admin\AdminController@users');
+    Route::get('/all-users/edit/{id}', 'Admin\AdminController@userEdit');
+    Route::get('/all-users/add', 'Admin\AdminController@addUser');
+    Route::post('/all-users/store', 'Admin\AdminController@storeUser');
+    Route::post('/all-users/edit/{id}/store', 'Admin\AdminController@userEditStore');
+    Route::delete('/all-users/{id}/delete', 'Admin\AdminController@deleteUser');
+
+    Route::get('/applications', 'Admin\AdminController@applicationList');
+    Route::get('/applications/approve/{id}', 'Admin\AdminController@applicationUpdate');
+    Route::post('/applications/approve/{id}/store', 'Admin\AdminController@storeApplication');
+    
+    Route::get('/course/view/{id}/report',  'Course\CourseController@report');
+    Route::post('/course/view/{id}/report/store',  'Course\CourseController@storeReport');
+
+    Route::get('/reports', 'Admin\AdminController@reportList');
+
+    Route::get('/manage-teacher', 'Admin\AdminController@teacherList');
+    Route::get('/teacher/edit/{id}', 'Admin\AdminController@teacherEdit');
+    Route::put('/teacher/edit/{id}/store', 'Admin\AdminController@teacherStore');
+    Route::delete('/teacher/delete/{id}/', 'Admin\AdminController@teacherDelete');
+
+    Route::get('/my-salary/{id}', 'Admin\AdminController@withdrawSalary');
+    Route::put('/my-salary/{id}/store', 'Admin\AdminController@withdrawStore');
 });

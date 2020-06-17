@@ -25,9 +25,10 @@ class MynotificationController extends Controller
             $notificationUpdate->save();
         }
 
-        $notificationCount = DB::table('mynotifications')
-                        ->where('n_status', 0)->count();
-            $n = $notificationCount;
+        $n = DB::table('mynotifications')
+        ->where('n_status', 0)
+        ->where('n_user_id', $user->id)
+        ->count();
 
         return view('user.notification.list', compact('notification', 'user', 'n'));
     }

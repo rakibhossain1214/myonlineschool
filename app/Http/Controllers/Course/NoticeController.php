@@ -26,9 +26,10 @@ class NoticeController extends Controller
 
         $notice = DB::table('notices')->where('notice_course_id', $id)->orderBy('id','DESC')->get();
 
-        $notificationCount = DB::table('mynotifications')
-                                ->where('n_status', 0)->count();
-        $n = $notificationCount;
+        $n = DB::table('mynotifications')
+        ->where('n_status', 0)
+        ->where('n_user_id', $user->id)
+        ->count();
 
 
         $status = 0;
@@ -49,9 +50,10 @@ class NoticeController extends Controller
         $user = Auth::user();
         $course = Course::find($id);
 
-        $notificationCount = DB::table('mynotifications')
-        ->where('n_status', 0)->count();
-        $n = $notificationCount;
+        $n = DB::table('mynotifications')
+        ->where('n_status', 0)
+        ->where('n_user_id', $user->id)
+        ->count();
 
         $status = 0;
 
@@ -88,9 +90,10 @@ class NoticeController extends Controller
 
         $notice = DB::table('notices')->where('notice_course_id', $id)->orderBy('id','DESC')->get();
 
-        $notificationCount = DB::table('mynotifications')
-                                ->where('n_status', 0)->count();
-        $n = $notificationCount;
+        $n = DB::table('mynotifications')
+        ->where('n_status', 0)
+        ->where('n_user_id', $user->id)
+        ->count();
 
         $status = 0;
 
@@ -99,6 +102,15 @@ class NoticeController extends Controller
         {
             $status = 1;
         }
+
+        $allCourseStudents = DB::select('select * from course_students where c_id=?',[$course->id]);
+            foreach($allCourseStudents as $courseStudent){
+                $notificationStudent = new Mynotification();
+                $notificationStudent->notification = "Your booked course'".$course->c_name."' has posted a new notice!";
+                $notificationStudent->n_user_id = $courseStudent->s_id;
+                $notificationStudent->n_status = 0;
+                $notificationStudent->save();
+            }
         
         return view('user.notice.list',  compact('status','n','page_name', 'user', 'course', 'notice'))->with('success',"Notice posted Successfully!");
     }
@@ -132,10 +144,10 @@ class NoticeController extends Controller
 
         $notice = DB::table('notices')->where('notice_course_id', $id)->orderBy('id','DESC')->get();
 
-        $notificationCount = DB::table('mynotifications')
-                                ->where('n_status', 0)->count();
-        $n = $notificationCount;
-
+        $n = DB::table('mynotifications')
+            ->where('n_status', 0)
+            ->where('n_user_id', $user->id)
+            ->count();
         $status = 0;
 
         $statusChecker =  DB::select('select * from course_students where c_id=? and s_id=?', [$id, Auth::user()->id]);;

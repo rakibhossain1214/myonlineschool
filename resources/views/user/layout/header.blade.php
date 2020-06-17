@@ -13,7 +13,7 @@
                     | Home
                 </a> 
 
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/all-courses') }}">
                     Courses
                 </a> 
         </div>
@@ -26,6 +26,7 @@
             </a>
 
             <div class="user-menu dropdown-menu">
+            <a class="nav-link" href="{{ url('/dashboard') }}"><i class="menu-item fa fa-dashboard"></i>Dashboard</a>
                     <a class="nav-link" href="{{  url('dashboard/notification') }}"><i class="menu-item fa fa-bell"></i>Notifications <span class="count">{{ $n }}</span></a>
                     <a class="nav-link" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

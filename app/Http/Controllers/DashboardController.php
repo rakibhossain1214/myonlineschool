@@ -16,10 +16,13 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $notification = DB::table('mynotifications')
-                        ->where('n_status', 0)->count();
+        $user = Auth::user();
+        $n = DB::table('mynotifications')
+            ->where('n_status', 0)
+            ->where('n_user_id', $user->id)
+            ->count();
 
-        return view('user.profile.profile', array('user' => Auth::user(), 'n' => $notification));
+        return view('user.profile.profile', array('user' => Auth::user(), 'n' => $n));
     }
 
     public function updateAvatar(Request $request)
@@ -33,19 +36,24 @@ class DashboardController extends Controller
             $user->avatar = $filename;
             $user->save();
 
-            $notification = DB::table('mynotifications')
-                        ->where('n_status', 0)->count();
-            $n = $notification;
+           
+            $n = DB::table('mynotifications')
+                ->where('n_status', 0)
+                ->where('n_user_id', $user->id)
+                ->count();
             return view('user.profile.profile', compact('user', 'n'));
         }
     }
 
     public function location(){
             
-            $notification = DB::table('mynotifications')
-            ->where('n_status', 0)->count();
+        $user = Auth::user();
+        $n = DB::table('mynotifications')
+            ->where('n_status', 0)
+            ->where('n_user_id', $user->id)
+            ->count();
 
-            return view('user.profile.mylocation', array('user' => Auth::user(), 'n' => $notification));
+            return view('user.profile.mylocation', array('user' => Auth::user(), 'n' => $n));
     }
 
 
@@ -54,10 +62,11 @@ class DashboardController extends Controller
         $page_name = 'Profile Edit';
         $user = User::find($id);
         
-        $notification = DB::table('mynotifications')
-                    ->where('n_status', 0)->count();
-        
-        $n = $notification;
+       
+        $n = DB::table('mynotifications')
+            ->where('n_status', 0)
+            ->where('n_user_id', $user->id)
+            ->count();
 
         return view('user.profile.edit', compact('page_name', 'user', 'n'));
     }

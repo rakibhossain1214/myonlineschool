@@ -24,7 +24,7 @@
                 <div class="col-md-12">
                     <div class="card">
 
-                    @if($message = Session::get('success'))
+                    @if($message != null)
                         <div class="alert alert-success">
                             {{ $message }}
                         </div>
@@ -36,19 +36,32 @@
                       <tr>
                         <th>#</th>
                         <th>Student Name</th>
-                        <th>Student Marks</th>
-                        <th>Student Grade</th>
-                        
+                        <th>Total Marks</th>
+                        <th>Grade</th>
+                        @if($isTeacher == 1 || $user->type == 3)
+                        <th>Action</th>
+                        @endif
                       </tr>
                     </thead>
                     <tbody>
                       <tr>
                       @foreach($students as $i=>$row)
-                        <td>{{ $row->s_id }}</td>
+                        <td>{{ ++$i }}</td>
                         <td>{{ $row->s_name }}</td>
                         <td>{{ $row->s_marks }}</td>
                         <td>{{ $row->s_grade }}</td>
+                        <td>
                         
+                        @if($isTeacher == 1 || $user->type == 3)
+                        <a href="{{ url('dashboard/course/view/'.$course->id.'/update-result/'.$row->id) }}" class="btn btn-primary">Edit</a>
+                        @endif
+                        
+                        @if($user->type == 3 )
+                        {{ Form::open(['method'=>'DELETE', 'url'=>['/dashboard/course/view/'.$course->id.'/delete-student/'.$row->id], 'style'=>'display:inline'])}}
+                          {{ Form::submit('Delete', ['class' =>'btn btn-danger']) }}
+                          {{ Form::close() }}
+                        @endif
+                        </td>
                       </tr>
                       @endforeach
                     </tbody>

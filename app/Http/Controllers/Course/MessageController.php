@@ -22,10 +22,10 @@ class MessageController extends Controller
 
         $mymessage = Message::where('m_receiver_id', Auth::user()->id)->get();
         
-        $notificationCount = DB::table('mynotifications')
-                            ->where('n_status', 0)->count();
-        $n = $notificationCount;
-
+        $n = DB::table('mynotifications')
+        ->where('n_status', 0)
+        ->where('n_user_id', $user->id)
+        ->count();
 
         return view('user.message.list', compact('user','page_name', 'mymessage', 'n'));
     }
@@ -37,9 +37,10 @@ class MessageController extends Controller
 
         $mymessage = Message::where('m_receiver_id', Auth::user()->id)->get();
         
-        $notificationCount = DB::table('mynotifications')
-                            ->where('n_status', 0)->count();
-        $n = $notificationCount;
+        $n = DB::table('mynotifications')
+        ->where('n_status', 0)
+        ->where('n_user_id', $user->id)
+        ->count();
 
         $details = array("messages"=>"", "token"=>"");
         $details["messages"] = $mymessage;
@@ -55,9 +56,10 @@ class MessageController extends Controller
 
         $mymessage = Message::where('m_sender_id', Auth::user()->id)->get();
         
-        $notificationCount = DB::table('mynotifications')
-                            ->where('n_status', 0)->count();
-        $n = $notificationCount;
+        $n = DB::table('mynotifications')
+            ->where('n_status', 0)
+            ->where('n_user_id', $user->id)
+            ->count();
 
         return view('user.message.sent', compact('user','page_name', 'mymessage', 'n'));
     }
@@ -71,9 +73,10 @@ class MessageController extends Controller
         $mymessage->m_status = 1;
         $mymessage->save();
 
-        $notificationCount = DB::table('mynotifications')
-                            ->where('n_status', 0)->count();
-        $n = $notificationCount;
+        $n = DB::table('mynotifications')
+        ->where('n_status', 0)
+        ->where('n_user_id', $user->id)
+        ->count();
 
         return view('user.message.read', compact('user','page_name', 'mymessage', 'n'));
     }
@@ -86,9 +89,10 @@ class MessageController extends Controller
 
         $users = User::pluck('name','id');
 
-        $notificationCount = DB::table('mynotifications')
-        ->where('n_status', 0)->count();
-$n = $notificationCount;
+        $n = DB::table('mynotifications')
+        ->where('n_status', 0)
+        ->where('n_user_id', $user->id)
+        ->count();
 
         return view('user.message.create', compact('user','page_name','users', 'n'));
     }

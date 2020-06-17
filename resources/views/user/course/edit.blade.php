@@ -23,6 +23,12 @@
                                     </div>
                                 @endif
 
+                                @if($message = Session::get('success'))
+                                    <div class="alert alert-danger">
+                                        {{ $message }}
+                                    </div>
+                                @endif
+
                                   <hr>
                                   {{ Form::model($course, ['route' => ['course-update', $course->id], 'method'=>'put']) }}
 
@@ -51,6 +57,16 @@
                                     <div class="form-group">
                                       {{ Form::label('schedule', 'Availabale Time Slots', ['class' => 'control-label mb-1']) }}
                                       {{ Form::select('schedule[]', $schedule, null, ['class' => 'form-control myselect', 'data-placeholder' => 'Select Schedules', 'multiple']) }}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="start_date">Course Start Date</label>
+                                        <input type="date" name="start_date" id="start_date">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="end_date">Course End Date</label>
+                                        <input type="date" name="end_date" id="end_date">
                                     </div>
 
 

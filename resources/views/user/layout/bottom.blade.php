@@ -13,6 +13,25 @@
     <script src="{{ asset('teacher/assets/js/lib/vector-map/country/jquery.vmap.world.js') }}"></script>
     <script src="{{ asset('teacher/assets/js/lib/chosen/chosen.jquery.min.js') }}"></script>
 
+<!-- home -->
+    <script href="{{ asset('home/lib/jquery/jquery.min.js') }}"></script>
+  <script href="{{ asset('home/lib/jquery/jquery-migrate.min.js') }}"></script>
+  <script href="{{ asset('home/lib/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script href="{{ asset('home/lib/easing/easing.min.js') }}"></script>
+  <script href="{{ asset('home/lib/superfish/hoverIntent.js') }}"></script>
+  <script href="{{ asset('home/lib/superfish/superfish.min.js') }}"></script>
+  <script href="{{ asset('home/lib/wow/wow.min.js') }}"></script>
+  <script href="{{ asset('home/lib/owlcarousel/owl.carousel.min.js') }}"></script>
+  <script href="{{ asset('home/lib/magnific-popup/magnific-popup.min.js') }}"></script>
+  <script href="{{ asset('home/lib/sticky/sticky.js') }}"></script>
+
+
+
+  <script href="{{ asset('home/contactform/contactform.js') }}"></script>
+  <script href="{{ asset('home/js/main.js') }}"></script>
+
+<!-- Home -->
+
     <script>
         ( function ( $ ) {
             "use strict";

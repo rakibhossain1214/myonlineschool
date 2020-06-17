@@ -18,23 +18,29 @@
             <div id="main-menu" class="main-menu collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="active">
-                        <a href="{{ url('/dashboard') }}"> <i class="menu-icon fa fa-dashboard"></i>Profile Information </a>
+                        <a href="{{ url('/dashboard') }}"> <i class="menu-icon fa fa-user"></i>Profile Information </a>
                     </li>
                     <li>
                         @if($user->type == 2)
                         <a href="{{ url('/dashboard/course/') }}"> <i class="menu-icon fa fa-laptop"></i>Instructing Courses</a>
+                        <a href="{{ url('/dashboard/my-salary/'.$user->id) }}"> <i class="menu-icon fa fa-credit-card"></i>My Salary</a>
                         @elseif($user->type == 1)
                         <a href="{{ url('/dashboard/course/student/') }}"> <i class="menu-icon fa fa-laptop"></i>My Courses</a>
                         @elseif($user->type == 3)
-                        <a href="{{ url('/dashboard/course/student/') }}"> <i class="menu-icon fa fa-laptop"></i>Instructing Courses</a>
-                        <a href="{{ url('/dashboard/course/') }}"> <i class="menu-icon fa fa-laptop"></i>My Courses</a>
+                        <a href="{{ url('/dashboard/all-users/') }}"> <i class="menu-icon fa fa-users"></i>Manage Users</a>
+                        <a href="{{ url('/dashboard/course/all-courses/') }}"> <i class="menu-icon fa fa-laptop"></i>Manage Courses</a>
+                        <a href="{{ url('/dashboard/course/checkouts/') }}"> <i class="menu-icon fa fa-plus-circle"></i>Manage Bookings</a>
+                        <a href="{{ url('/dashboard/applications/') }}"> <i class="menu-icon fa fa-check-circle"></i>Manage Applications</a>
+                        <a href="{{ url('/dashboard/manage-teacher/') }}"> <i class="menu-icon fa fa-user-md"></i>Manage Teachers</a>
+                        <a href="{{ url('/dashboard/reports/') }}"> <i class="menu-icon fa fa-flag"></i>Manage Reports</a>
+                        
                         @endif
                     </li>
                     <li>
                         <a href="{{ url('/dashboard/message/') }}"> <i class="menu-icon fa fa-envelope"></i>Messages</a>
                     </li>
                     <li>
-                        <a href="{{ url('/dashboard/profile/mylocation/') }}"> <i class="menu-icon fa fa-envelope"></i>My Location</a>
+                        <a href="{{ url('/dashboard/profile/mylocation/') }}"> <i class="menu-icon fa fa-map-marker"></i>My Location</a>
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->

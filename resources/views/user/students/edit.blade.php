@@ -24,11 +24,21 @@
                                 @endif
 
                                   <hr>
-                                  {{ Form::open(['method'=>'PUT', 'url'=>['dashboard/course/view/student/'.$studentId.'/edit'], 'style'=>'display:inline'])}}
+                                  {{ Form::open(['method'=>'PUT',  'url'=>['dashboard/course/view/'.$course->id.'/update-result/'.$student->id.'/store'], 'style'=>'display:inline'])}}
 
-                                  <div class="form-group">
+                                    <div class="form-group">
                                       {{ Form::label('s_name', 'Student Name', ['class' => 'control-label mb-1', 'id' => 's_name']) }}
-                                      {{ Form::text('s_name', null, ['class' => 'form-control']) }}
+                                      {{ Form::label('s_name', $student->s_name, ['class' => 'form-control']) }}
+                                      </div>
+
+                                      <div class="form-group">
+                                      {{ Form::label('s_marks', 'Total Marks', ['class' => 'control-label mb-1', 'id' => 's_marks']) }}
+                                      {{ Form::number('s_marks', $student->s_marks, ['class' => 'form-control']) }}
+                                      </div>
+
+                                      <div class="form-group">
+                                      {{ Form::label('s_grade', 'Grade', ['class' => 'control-label mb-1', 'id' => 's_grade']) }}
+                                      {{ Form::text('s_grade', $student->s_grade, ['class' => 'form-control']) }}
                                       </div>
 
                                       

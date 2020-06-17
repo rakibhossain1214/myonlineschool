@@ -21,6 +21,9 @@ class CreateCoursesTable extends Migration
             $table->string('c_image');
             $table->integer('c_teacher_id');
             $table->string('c_teacher_name');
+            $table->integer('availability');
+            $table->string('start_date');
+            $table->string('end_date');
             $table->timestamps();
         });
     }
